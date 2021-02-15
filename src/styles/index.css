@@ -1,9 +1,42 @@
 @import './normalize.css';
 
+html,
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
 }
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 h1 {
-  color: darkslategrey;
+  font-weight: 300;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1.5rem);
+  grid-template-rows: repeat(16, 1.5rem);
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+  margin: 1rem;
+}
+.cell {
+  background-color: #444;
+  border-radius: 0.125rem;
+}
+.active {
+  background-color: #ddd;
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.5);
+}
+.highlighted {
+  background-color: #fff;
+  box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.6);
 }
