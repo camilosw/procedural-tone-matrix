@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -28,7 +29,7 @@ module.exports = (env, argv) => {
         {
           test: /\.(ts|js)$/,
           exclude: /node_modules/,
-          use: ['eslint-loader'],
+          use: ['babel-loader', 'eslint-loader'],
         },
         {
           test: /\.css$/i,
