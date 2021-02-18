@@ -3,8 +3,8 @@ import { FilterOptions } from 'tone';
 import { RecursivePartial } from 'tone/build/esm/core/util/Interface';
 
 type Constructor = {
-  notes?: number;
-  steps?: number;
+  notes: number;
+  steps: number;
   options: RecursivePartial<Tone.SynthOptions>;
   filterOptions: Partial<FilterOptions>;
 };
@@ -19,7 +19,7 @@ export default class SynthInstrument {
   private readonly polyphony: number[];
   private readonly scheduledNotes: Record<string, number>;
 
-  constructor({ notes = 16, steps = 16, options, filterOptions }: Constructor) {
+  constructor({ notes, steps, options, filterOptions }: Constructor) {
     this.notes = notes;
     const pentatonic = ['B#', 'D', 'F', 'G', 'A'];
     const octave = 3;
@@ -65,7 +65,7 @@ export default class SynthInstrument {
   }
 
   scheduleNote(noteIndex: number, step: number) {
-    if (this.scheduledNotes[`${noteIndex}${step}`]) return;
+    if (this.scheduledNotes[`${noteIndex}-${step}`]) return;
 
     const playId = Tone.Transport.schedule((time) => {
       const highVolume = -10;
@@ -87,16 +87,16 @@ export default class SynthInstrument {
         console.log(e);
       }
     }, step * this.noteDuration);
-    this.scheduledNotes[`${noteIndex}${step}`] = playId;
+    this.scheduledNotes[`${noteIndex}-${step}`] = playId;
     this.polyphony[step]++;
   }
 
   unscheduleNote(noteIndex: number, step: number) {
-    const playId = this.scheduledNotes[`${noteIndex}${step}`];
+    const playId = this.scheduledNotes[`${noteIndex}-${step}`];
     if (playId) {
       this.polyphony[step]--;
       Tone.Transport.clear(playId);
-      delete this.scheduledNotes[`${noteIndex}${step}`];
+      delete this.scheduledNotes[`${noteIndex}-${step}`];
     }
   }
 }
