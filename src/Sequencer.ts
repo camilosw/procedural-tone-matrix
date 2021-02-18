@@ -1,6 +1,6 @@
 import SynthInstrument from 'SynthInstrument';
 import * as Tone from 'tone';
-import { Emitter } from 'tone';
+import { Emitter, Sequence } from 'tone';
 
 type SequencerEvents = 'loop' | 'step';
 
@@ -10,14 +10,13 @@ type Constructor = {
 };
 
 export default class Sequencer {
-  private readonly notes: number;
   private readonly steps: number;
   private readonly instruments: SynthInstrument[];
+  private sequence?: Sequence;
 
   constructor(
     { notes = 16, steps = 16 }: Constructor = { notes: 16, steps: 16 },
   ) {
-    this.notes = notes;
     this.steps = steps;
     Tone.Transport.loop = true;
     Tone.Transport.loopEnd = '1m';
@@ -38,16 +37,18 @@ export default class Sequencer {
   }
 
   start() {
-    new Tone.Loop((time) => {
-      const loopStart = Tone.Transport.loopStart as number;
-      const loopEnd = Tone.Transport.loopEnd as number;
-      const loopTime = loopEnd - loopStart;
-      const step = Math.floor(((time % loopTime) / loopTime) * this.steps);
-      this.emit('step', step);
-    }, `${this.steps}n`).start(0);
-
     Tone.Transport.start();
     Tone.context.resume();
+
+    if (!this.sequence) {
+      this.sequence = new Tone.Sequence(
+        (_, index) => this.emit('step', index),
+        Array(16)
+          .fill(0)
+          .map((_, index) => index),
+        `${this.steps}n`,
+      ).start(0);
+    }
   }
 
   stop() {
@@ -66,8 +67,8 @@ export default class Sequencer {
     });
   }
 
-  on!: (event: SequencerEvents, callback: (...args: unknown[]) => void) => this;
-  emit!: (event: unknown, ...args: unknown[]) => this;
+  on!: (event: SequencerEvents, callback: (...args: any[]) => void) => this;
+  emit!: (event: any, ...args: any[]) => this;
 }
 
 Emitter.mixin(Sequencer);

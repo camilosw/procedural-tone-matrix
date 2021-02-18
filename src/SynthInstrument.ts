@@ -35,7 +35,7 @@ export default class SynthInstrument {
 
     this.noteDuration = Tone.Time('1m').toSeconds() / steps;
     this.noteOffset = this.noteDuration * 6;
-    const numVoices = 3;
+    const numVoices = 4;
 
     this.players = [];
     this.currentPlayer = 0;
