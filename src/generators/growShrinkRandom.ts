@@ -7,12 +7,14 @@
  * start creating new ones again
  */
 
+import { Generator } from './types';
+
 const NOTES_PER_COLUMN = 2;
 const MAX_NOTES = 24;
 const MIN_NOTES = 4;
 const REMOVE_NOTES = 4;
 
-export const growShrinkRandom = (notes: number, steps: number) => {
+export const growShrinkRandom: Generator = (notes: number, steps: number) => {
   const grid = Array(notes * steps).fill(0);
   const gridIndex = grid.map((_, index) => index);
   const activeCellsIndex: number[] = [];

@@ -3,7 +3,9 @@
  * turn it on, otherwise, turn it off
  */
 
-export const pureRandom = (notes: number, steps: number) => {
+import { Generator } from './types';
+
+export const pureRandom: Generator = (notes: number, steps: number) => {
   const grid = Array(notes * steps).fill(0);
 
   const next = () => {
