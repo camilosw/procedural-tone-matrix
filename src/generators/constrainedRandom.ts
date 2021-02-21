@@ -8,12 +8,15 @@
 
 const NOTES_PER_COLUMN = 2;
 const MAX_NOTES = 24;
+const KEEP_LOOPS = 3;
+const NOTES_PER_LOOP = 4;
 
 export const constrainedRandom = (notes: number, steps: number) => {
   const grid = Array(notes * steps).fill(0);
   const gridIndex = grid.map((_, index) => index);
   const activeCellsIndex: number[] = [];
   const notesPerColumn = Array(steps).fill(0);
+  let keepLoop = 0;
 
   const addNote = () => {
     const filteredGridIndex = gridIndex.filter(
@@ -37,10 +40,20 @@ export const constrainedRandom = (notes: number, steps: number) => {
   };
 
   const next = () => {
-    if (activeCellsIndex.length >= MAX_NOTES) {
-      removeNote();
+    if (keepLoop > 0) {
+      keepLoop--;
+      return;
     }
-    addNote();
+
+    if (activeCellsIndex.length >= MAX_NOTES) {
+      for (let i = 0; i < NOTES_PER_LOOP; i++) {
+        removeNote();
+        addNote();
+      }
+      keepLoop = KEEP_LOOPS - 1;
+    } else {
+      addNote();
+    }
   };
 
   return { grid, next };

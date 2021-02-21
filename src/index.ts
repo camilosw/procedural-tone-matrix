@@ -1,5 +1,5 @@
 import { constrainedRandom } from 'generators/constrainedRandom';
-// import { growShrinkRandom } from 'generators/growShrinkRandom';
+import { growShrinkRandom } from 'generators/growShrinkRandom';
 // import { pureRandom } from 'generators/pureRandom';
 import { highlightGrid, updateGrid } from 'grid';
 import Sequencer from 'Sequencer';
