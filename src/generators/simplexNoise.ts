@@ -1,4 +1,3 @@
-import { drawGraph } from 'drawGraph';
 import SimplexNoise from 'simplex-noise';
 
 import { Generator } from './types';
@@ -31,7 +30,6 @@ export const simplexNoise: Generator = (notes: number, steps: number) => {
       selectedIndexes.push(i + note * steps);
     }
 
-    drawGraph(values, { offset });
     return selectedIndexes;
   };
 
@@ -40,8 +38,6 @@ export const simplexNoise: Generator = (notes: number, steps: number) => {
     for (let i = 0; i < steps; i++) {
       holesValues.push(simplex.noise2D(t + offset * 1000, i * 10));
     }
-    console.log(holesValues);
-    drawGraph(holesValues, { offset });
 
     return holesValues.map(
       (value, index) =>
