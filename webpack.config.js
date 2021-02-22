@@ -15,7 +15,7 @@ module.exports = (env, argv) => {
     output: {
       filename: isProduction ? 'js/index.[contenthash:8].js' : 'index.js',
       path: path.resolve(__dirname, 'build'),
-      publicPath: '/',
+      publicPath: './',
     },
     optimization: {
       minimize: isProduction,
@@ -32,8 +32,13 @@ module.exports = (env, argv) => {
           use: ['babel-loader', 'eslint-loader'],
         },
         {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            isDevelopment && 'style-loader',
+            isProduction && MiniCssExtractPlugin.loader,
+            'css-loader',
+          ].filter(Boolean),
         },
       ],
     },

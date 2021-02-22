@@ -44,3 +44,12 @@ h1 {
 .controls {
   margin-top: 1rem;
 }
+.author {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+.author,
+a,
+a:visited {
+  color: #999;
+}
