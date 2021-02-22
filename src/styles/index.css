@@ -41,3 +41,6 @@ h1 {
   box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.8);
   transition: all 0.125s ease;
 }
+.controls {
+  margin-top: 1rem;
+}

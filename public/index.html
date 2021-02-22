@@ -267,9 +267,15 @@
         <div class="cell"></div>
         <div class="cell"></div>
       </div>
-      <div>
+      <div class="controls">
+        <label for="generator">Generator </label>
+        <select name="generator" id="generator">
+          <option value="simplex-noise">Simplex noise</option>
+          <option value="constrained-random">Constrained random</option>
+          <option value="grow-shrink-random">Grow-Shrink random</option>
+          <option value="pure-random">Pure random</option>
+        </select>
         <button class="start-button">Start</button>
-        <button class="stop-button">Stop</button>
       </div>
     </div>
   </body>

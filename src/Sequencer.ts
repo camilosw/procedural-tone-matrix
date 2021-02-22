@@ -36,6 +36,10 @@ export default class Sequencer {
     Tone.Transport.on('loopEnd', () => this.emit('loop'));
   }
 
+  getState() {
+    return Tone.Transport.state;
+  }
+
   start() {
     Tone.Transport.start();
     Tone.context.resume();
